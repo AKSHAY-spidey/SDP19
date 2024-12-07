@@ -1,6 +1,4 @@
-// frontend/src/components/EventList.js
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useAuth } from '../AuthContext'; // Import useAuth to access authentication context
 import EventRegistration from './EventRegistration'; // Import the EventRegistration component
@@ -11,12 +9,12 @@ const EventList = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchEvents = async () => {
+        const fetchEvents = () => {
             try {
-                const response = await axios.get('http://localhost:5001/events'); // Fetch events from the server
-                setEvents(response.data);
+                const storedEvents = JSON.parse(localStorage.getItem('events')) || [];
+                setEvents(storedEvents);
             } catch (error) {
-                console.error('Error fetching events:', error);
+                console.error('Error fetching events from localStorage:', error);
                 toast.error('Failed to fetch events');
             } finally {
                 setLoading(false);
@@ -38,12 +36,12 @@ const EventList = () => {
             ) : (
                 <ul>
                     {events.map((event) => (
-                        <li key={event.id} className="event-item">
-                            <h2>{event.name}</h2>
+                        <li key={event._id} className="event-item">
+                            <h2>{event.title}</h2>
                             <p>{event.description}</p>
                             <p>Date: {new Date(event.date).toLocaleString()}</p>
                             {user && (
-                                <EventRegistration eventId={event.id} />
+                                <EventRegistration eventId={event._id} />
                             )}
                         </li>
                     ))}
