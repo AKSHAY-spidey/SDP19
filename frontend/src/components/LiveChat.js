@@ -1,64 +1,42 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 const LiveChat = ({ userName }) => {
     const { eventId } = useParams(); // Get eventId from URL parameters
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const messagesEndRef = useRef(null);
 
+    // Load messages from localStorage when the component mounts
     useEffect(() => {
-        const fetchMessages = async () => {
-            if (!eventId) {
-                console.error('No eventId provided');
-                return; // Exit if eventId is not available
-            }
-            setLoading(true);
-            setError(null); // Reset error state before fetching
-            try {
-                const response = await axios.get(`http://localhost:5001/events/${eventId}/messages`);
-                setMessages(response.data);
-            } catch (error) {
-                console.error('Error fetching messages:', error);
-                setError('Failed to load messages. Please try again later.');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchMessages();
-
-        // Polling for new messages every 5 seconds
-        const interval = setInterval(fetchMessages, 5000);
-        return () => clearInterval(interval);
+        const storedMessages = JSON.parse(localStorage.getItem(`event_${eventId}_messages`)) || [];
+        setMessages(storedMessages);
     }, [eventId]);
 
-    const handleSendMessage = async (e) => {
+    // Scroll to the bottom of the chat
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    // Handle sending a message
+    const handleSendMessage = (e) => {
         e.preventDefault();
         if (!newMessage.trim()) return; // Prevent sending empty messages
 
-        try {
-            const messageData = {
-                userName: userName || 'Anonymous', // Use passed userName or default to 'Anonymous'
-                content: newMessage
-            };
+        const messageData = {
+            userName: userName || 'Anonymous', // Use passed userName or default to 'Anonymous'
+            content: newMessage,
+            timestamp: new Date().toISOString() // Add timestamp for sorting
+        };
 
-            await axios.post(`http://localhost:5001/events/${eventId}/messages`, messageData);
-            setNewMessage(''); // Clear input after sending
-            setMessages((prevMessages) => [...prevMessages, messageData]);
-            scrollToBottom();
-        } catch (error) {
-            console.error('Error sending message:', error);
-            setError('Failed to send message. Please try again.');
-            setNewMessage(''); // Clear input on error
-        }
-    };
+        // Update localStorage and messages state
+        const updatedMessages = [...messages, messageData];
+        setMessages(updatedMessages);
+        localStorage.setItem(`event_${eventId}_messages`, JSON.stringify(updatedMessages));
 
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+        setNewMessage(''); // Clear input after sending
+        scrollToBottom(); // Scroll to the bottom of the chat
     };
 
     return (
@@ -66,14 +44,16 @@ const LiveChat = ({ userName }) => {
             <h2>Live Chat</h2>
             {error && <div style={{ color: 'red' }}>{error}</div>} {/* Display error message */}
             <div style={{ height: '300px', overflowY: 'scroll', border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
-                {loading ? (
-                    <div>Loading messages...</div>
+                {messages.length === 0 ? (
+                    <div>No messages yet. Be the first to send a message!</div>
                 ) : (
-                    messages.map((msg, index) => (
-                        <div key={index}>
-                            <strong>{msg.userName}:</strong> {msg.content}
-                        </div>
-                    ))
+                    messages
+                        .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)) // Sort messages by timestamp
+                        .map((msg, index) => (
+                            <div key={index}>
+                                <strong>{msg.userName}:</strong> {msg.content}
+                            </div>
+                        ))
                 )}
                 <div ref={messagesEndRef} /> {/* Scroll reference */}
             </div>
@@ -91,9 +71,6 @@ const LiveChat = ({ userName }) => {
                     Send
                 </button>
             </form>
-            <div aria-live="polite" style ={{ visibility: 'hidden', height: '0' }}>
-                {error && error}
-            </div>
         </div>
     );
 };
