@@ -1,6 +1,5 @@
 // frontend/src/components/LoginForm.js
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './LoginForm.css'; // Import the CSS file for styling
@@ -14,46 +13,45 @@ const LoginForm = () => {
     const navigate = useNavigate(); // Hook for navigation
     const { login } = useAuth(); // Get login function from context
 
-    const handleSubmit = async (e) => {
+    // Effect to check for a logged-in user on component mount
+    useEffect(() => {
+        const loggedUser = localStorage.getItem('user'); // Retrieve user data from localStorage
+        if (loggedUser) {
+            // If user data exists, navigate to dashboard directly
+            navigate('/dashboard');
+        }
+    }, [navigate]);
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const userData = { username, password };
-
-        setLoading(true); // Set loading to true
-
-        try {
-            // Keep the API endpoint as it is
-            const response = await axios.post('http://localhost:5001/users', userData); 
-            console.log('User  logged in successfully:', response.data);
+    
+        // Retrieve users from localStorage
+        const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+    
+        // Find a user matching the entered username and password
+        const foundUser = existingUsers.find(
+            (user) => user.username === username && user.password === password
+        );
+    
+        if (foundUser) {
             toast.success('Login successful!');
-            login(response.data); // Call login function with user data from response
+            localStorage.setItem('user', JSON.stringify(foundUser)); // Store the logged-in user in localStorage
+            login(foundUser); // Call login function with found user
             setUsername('');
             setPassword('');
-            navigate('/dashboard'); // Redirect to dashboard or another page
-        } catch (error) {
-            console.error('Error logging in:', error);
-            // Improved error handling
-            if (error.response) {
-                // Server responded with a status other than 200 range
-                const errorMessage = error.response.data.message || 'Failed to log in. Please check your credentials and try again.';
-                toast.error(errorMessage);
-            } else if (error.request) {
-                // Request was made but no response was received
-                toast.error('No response from server. Please try again later.');
-            } else {
-                // Something happened in setting up the request
-                toast.error('Error: ' + error.message);
-            }
-        } finally {
-            setLoading(false); // Reset loading state
+            navigate('/dashboard'); // Redirect to dashboard after successful login
+        } else {
+            toast.error('Invalid username or password. Please try again.');
         }
     };
+    
 
     return (
         <div className="login-form-container">
             <h1>Login</h1>
             <form onSubmit={handleSubmit} className="login-form">
                 <div className="form-group">
-                    <label htmlFor="username">Username:</label>
+                    <label htmlFor="username">User name:</label>
                     <input
                         type="text"
                         id="username"
