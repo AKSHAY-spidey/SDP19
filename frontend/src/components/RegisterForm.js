@@ -1,6 +1,5 @@
 // frontend/src/components/RegisterForm.js
 import React, { useState } from 'react';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './RegisterForm.css'; // Import the CSS file for styling
@@ -13,15 +12,26 @@ const RegisterForm = () => {
     const [loading, setLoading] = useState(false); // Loading state
     const navigate = useNavigate(); // Hook for navigation
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const userData = { username, password, role }; // Include role in user data
-
+    
         setLoading(true); // Set loading to true
-
+    
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/register', userData); // Corrected endpoint
-            console.log('User  registered successfully:', response.data);
+            // Retrieve the existing users from localStorage (if any)
+            const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+    
+            // Check if the username already exists
+            const userExists = existingUsers.some(user => user.username === username);
+            if (userExists) {
+                throw new Error('Username already exists. Please choose another one.');
+            }
+    
+            // Save the new user to localStorage
+            existingUsers.push(userData);
+            localStorage.setItem('users', JSON.stringify(existingUsers));
+    
             toast.success('Registration successful! You can now log in.');
             setUsername('');
             setPassword('');
@@ -29,11 +39,12 @@ const RegisterForm = () => {
             navigate('/login'); // Redirect to login page after successful registration
         } catch (error) {
             console.error('Error registering user:', error);
-            toast.error(error.response ? error.response.data.message : 'Failed to register');
+            toast.error(error.message || 'Failed to register');
         } finally {
             setLoading(false); // Reset loading state
         }
     };
+    
 
     return (
         <div className="register-form-container">
@@ -69,7 +80,7 @@ const RegisterForm = () => {
                         onChange={(e) => setRole(e.target.value)}
                         required
                     >
-                        <option value="user">User </option>
+                        <option value="user">User</option>
                         <option value="organizer">Organizer</option>
                     </select>
                 </div>
