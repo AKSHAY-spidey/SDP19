@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
 const Dashboard = () => {
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
-        const fetchEvents = async () => {
-            const response = await axios.get('/api/events');
-            setEvents(response.data);
-        };
-        fetchEvents();
+        // Get events from localStorage
+        const storedEvents = JSON.parse(localStorage.getItem('events')) || [];
+        setEvents(storedEvents);
     }, []);
 
     return (
