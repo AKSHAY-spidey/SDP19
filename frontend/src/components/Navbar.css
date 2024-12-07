@@ -38,4 +38,10 @@
 
 .navbar-item {
     color: #ffffff;
-    font-size: 16px; /* Maintain consistent font siz
+    font-size: 16px; /* Maintain consistent font size */
+    transition: color 0.3s ease; /* Smooth color change on hover */
+}
+
+.navbar-item:hover {
+    color: #00bcd4; /* Highlight menu item on hover */
+}
