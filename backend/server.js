@@ -5,6 +5,8 @@ const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
+const jsonServer = require('json-server');
+const path = require('path');
 
 dotenv.config();
 const User = require('./models/User');
@@ -118,6 +120,18 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: 'Internal server error' });
 });
 
-// Start the server
+// JSON Server for mock data
+const jsonServerRouter = jsonServer.router(path.join(__dirname, 'db.json')); // Path to your JSON mock data
+const jsonServerMiddlewares = jsonServer.defaults();
+app.use('/api/mock', jsonServerMiddlewares);
+app.use('/api/mock', jsonServerRouter);
+
+// Start the Express server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// Optionally start JSON Server separately on port 5001 if required (you can skip this if the mock API is integrated directly)
+const jsonServerPort = 5001;
+jsonServer.router(path.join(__dirname, 'db.json')).listen(jsonServerPort, () => {
+    console.log(`JSON Server running on port ${jsonServerPort}`);
+});
