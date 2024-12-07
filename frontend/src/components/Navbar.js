@@ -1,5 +1,5 @@
 // frontend/src/components/Navbar.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext'; // Import useAuth to access authentication context
 import './Navbar.css'; // Import the CSS file for styling
@@ -7,13 +7,23 @@ import './Navbar.css'; // Import the CSS file for styling
 const Navbar = () => {
     const { user, logout } = useAuth(); // Get user and logout function from context
 
-    console.log('Current user in Navbar:', user); // Debugging line
+    // Optional: Debugging line to confirm if the user is retrieved correctly
+    console.log('Current user in Navbar:', user);
 
+    // Handle logout functionality
     const handleLogout = () => {
         logout(); // Call logout function
     };
 
+    // Check if the user is registered for any event
     const isRegisteredForEvent = user?.registeredEvents?.length > 0;
+
+    useEffect(() => {
+        // Optional: Can use this to check if user is fetched on first load (from localStorage)
+        if (!user) {
+            console.log("No user found in context, checking localStorage.");
+        }
+    }, [user]);
 
     return (
         <nav className="navbar">
@@ -40,7 +50,8 @@ const Navbar = () => {
                             )}
                             <li>
                                 <button onClick={handleLogout} className="navbar-item" aria-label="Logout">
-                                    Logout </button>
+                                    Logout 
+                                </button>
                             </li>
                         </>
                     ) : (
