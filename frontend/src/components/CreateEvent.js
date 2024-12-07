@@ -1,4 +1,3 @@
-// frontend/src/components/CreateEvent.js
 import React, { useState } from 'react';
 import { useAuth } from '../AuthContext';
 
@@ -9,6 +8,8 @@ const CreateEvent = () => {
         date: '',
         location: '',
         description: '',
+        liveChatUrl: '', // New field for live chat URL
+        videoStreamUrl: '' // New field for video stream URL
     });
 
     const handleChange = (e) => {
@@ -18,10 +19,30 @@ const CreateEvent = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Here you would typically send the event details to your backend
-        console.log('Event Created:', eventDetails);
+        // Save the event details (including URLs) to localStorage
+        const storedEvents = localStorage.getItem('events');
+        const events = storedEvents ? JSON.parse(storedEvents) : [];
+
+        // Add the new event to the list
+        const newEvent = {
+            ...eventDetails,
+            id: Date.now(), // Generate a unique ID for the event
+            participants: [] // Initial empty participants list
+        };
+
+        // Save updated event list back to localStorage
+        events.push(newEvent);
+        localStorage.setItem('events', JSON.stringify(events));
+
         // Reset form after submission
-        setEventDetails({ title: '', date: '', location: '', description: '' });
+        setEventDetails({
+            title: '',
+            date: '',
+            location: '',
+            description: '',
+            liveChatUrl: '',
+            videoStreamUrl: ''
+        });
     };
 
     if (!user || user.role !== 'organizer') {
@@ -61,6 +82,20 @@ const CreateEvent = () => {
                     value={eventDetails.description}
                     onChange={handleChange}
                     required
+                />
+                <input
+                    type="url"
+                    name="liveChatUrl"
+                    placeholder="Live Chat URL"
+                    value={eventDetails.liveChatUrl}
+                    onChange={handleChange}
+                />
+                <input
+                    type="url"
+                    name="videoStreamUrl"
+                    placeholder="Video Stream URL"
+                    value={eventDetails.videoStreamUrl}
+                    onChange={handleChange}
                 />
                 <button type="submit">Create Event</button>
             </form>
