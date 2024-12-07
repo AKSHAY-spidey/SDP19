@@ -1,0 +1,41 @@
+/* frontend/src/components/Navbar.css */
+.navbar {
+    background-color: #1a1a1a; /* Darker background for better contrast */
+    padding: 15px 30px; /* Increased padding for a more spacious layout */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    position: sticky; /* Sticky navbar on scroll */
+    top: 0;
+    z-index: 1000; /* Ensure navbar is always on top */
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; /* Center-align content on wide screens */
+    margin: 0 auto;
+}
+
+.navbar-logo {
+    color: #ffffff;
+    font-size: 26px; /* Slightly larger font for emphasis */
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.navbar-logo:hover {
+    color: #00bcd4; /* Highlight logo on hover */
+}
+
+.navbar-menu {
+    list-style: none;
+    display: flex;
+    gap: 20px; /* Spacing between menu items */
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-item {
+    color: #ffffff;
+    font-size: 16px; /* Maintain consistent font siz

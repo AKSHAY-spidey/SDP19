@@ -1,0 +1,257 @@
+{
+  "users": [
+    {
+      "id": "8d07",
+      "username": "sakaray.akshay19@gmail.com",
+      "password": "Akshay@1904"
+    },
+    {
+      "id": "5998",
+      "username": "sakaray.akshay19@gmail.com",
+      "password": "Akshay@1904"
+    },
+    {
+      "id": "0b46",
+      "username": "sakaray.akshay19@gmail.com",
+      "password": "Akshay@1904"
+    },
+    {
+      "id": "920c",
+      "username": "Vilack@gmail.com",
+      "password": "Vilack@123"
+    },
+    {
+      "id": "499f",
+      "username": "user",
+      "password": "Akshay@1904"
+    },
+    {
+      "id": "c8ad",
+      "username": "sakaray.akshay19@gmail.com",
+      "password": "Akshay@1904"
+    },
+    {
+      "id": "7172",
+      "username": "sakaray.akshay19@gmail.com",
+      "password": "Akshay@1904"
+    },
+    {
+      "id": "56c7",
+      "username": "sakaray.akshay19@gmail.com",
+      "password": "Akshay@1904"
+    },
+    {
+      "id": "b0b8",
+      "username": "sakaray.akshay19@gmail.com",
+      "password": "Akshay@1904"
+    },
+    {
+      "id": "f56a",
+      "username": "sakaray.akshay19@gmail.com",
+      "password": "Akshay@1904"
+    }
+  ],
+  "events": [
+    {
+      "id": "2",
+      "title": "Sample Event 2",
+      "date": "2024-12-05",
+      "description": "Description for Sample Event 2",
+      "videoStreamUrl": "http://example.com/stream2",
+      "messages": []
+    },
+    {
+      "id": "3",
+      "title": "Sample Event 3",
+      "date": "2024-12-19",
+      "description": "Description for Sample Event 3",
+      "videoStreamUrl": "http://example.com/stream3",
+      "messages": []
+    },
+    {
+      "id": "4",
+      "title": "Sample Event 4",
+      "date": "2024-12-12",
+      "description": "Description for Sample Event 4",
+      "videoStreamUrl": "http://example.com/stream4",
+      "messages": []
+    },
+    {
+      "id": "5",
+      "title": "Sample Event 5",
+      "date": "2024-12-26",
+      "description": "Description for Sample Event 5",
+      "videoStreamUrl": "http://example.com/stream5",
+      "messages": []
+    },
+    {
+      "id": "6",
+      "title": "Sample Event 6",
+      "date": "2024-12-17",
+      "description": "Description for Sample Event 6",
+      "videoStreamUrl": "http://example.com/stream6",
+      "messages": []
+    },
+    {
+      "id": "7",
+      "title": "Sample Event 7",
+      "date": "2024-12-25",
+      "description": "Description for Sample Event 7",
+      "videoStreamUrl": "http://example.com/stream7",
+      "messages": []
+    },
+    {
+      "id": "8",
+      "title": "Sample Event 8",
+      "date": "2025-01-01",
+      "description": "Description for Sample Event 8",
+      "videoStreamUrl": "http://example.com/stream8",
+      "messages": []
+    },
+    {
+      "id": "9",
+      "title": "Sample Event 9",
+      "date": "2024-12-27",
+      "description": "Description for Sample Event 9",
+      "videoStreamUrl": "http://example.com/stream9",
+      "messages": []
+    },
+    {
+      "id": "10",
+      "title": "Sample Event 10",
+      "date": "2024-12-26",
+      "description": "Description for Sample Event 10",
+      "videoStreamUrl": "http://example.com/stream10",
+      "messages": []
+    },
+    {
+      "id": "11",
+      "title": "Sample Event 11",
+      "date": "2025-01-02",
+      "description": "Description for Sample Event 11",
+      "videoStreamUrl": "http://example.com/stream11",
+      "messages": []
+    },
+    {
+      "id": "12",
+      "title": "Sample Event 12",
+      "date": "2025-01-02",
+      "description": "Description for Sample Event 12",
+      "videoStreamUrl": "http://example.com/stream12",
+      "messages": []
+    },
+    {
+      "id": "13",
+      "title": "Sample Event 13",
+      "date": "2024-12-18",
+      "description": "Description for Sample Event 13",
+      "videoStreamUrl": "http://example.com/stream13",
+      "messages": []
+    },
+    {
+      "id": "14",
+      "title": "Sample Event 14",
+      "date": "2024-12-17",
+      "description": "Description for Sample Event 14",
+      "videoStreamUrl": "http://example.com/stream14",
+      "messages": []
+    },
+    {
+      "id": "15",
+      "title": "Sample Event 15",
+      "date": "2025-01-02",
+      "description": "Description for Sample Event 15",
+      "videoStreamUrl": "http://example.com/stream15",
+      "messages": []
+    },
+    {
+      "id": "16",
+      "title": "Sample Event 16",
+      "date": "2025-01-02",
+      "description": "Description for Sample Event 16",
+      "videoStreamUrl": "http://example.com/stream16",
+      "messages": []
+    },
+    {
+      "id": "17",
+      "title": "Sample Event 17",
+      "date": "2024-12-19",
+      "description": "Description for Sample Event 17",
+      "videoStreamUrl": "http://example.com/stream17",
+      "messages": []
+    },
+    {
+      "id": "71c8",
+      "title": "reverv",
+      "date": "2024-12-25",
+      "description": "reverve",
+      "videoStreamUrl": "http://example.com/stream71c8",
+      "messages": []
+    },
+    {
+      "id": "37f4",
+      "title": "dfbdfbdf",
+      "date": "2025-01-01",
+      "description": "dfbdfbdfb",
+      "videoStreamUrl": "http://example.com/stream37f4",
+      "messages": []
+    }
+  ],
+  "registrations": [
+    {
+      "id": "1",
+      "eventId": null,
+      "userId": "8d07"
+    },
+    {
+      "id": "2",
+      "eventId": "2",
+      "userId": "920c"
+    },
+    {
+      "id": "3",
+      "eventId": "3",
+      "userId": "5998"
+    },
+    {
+      "id": "4",
+      "eventId": "4",
+      "userId": "0b46"
+    },
+    {
+      "id": "8c9e",
+      "eventId": "37f4",
+      "userId": "5998"
+    },
+    {
+      "id": "77c1",
+      "eventId": null,
+      "userId": "5998"
+    },
+    {
+      "id": "1733506555398",
+      "eventId": "2",
+      "userId": "5998"
+    },
+    {
+      "id": "1733508150746",
+      "eventId": "2",
+      "userId": "5998"
+    },
+    {
+      "id": "1733508337632",
+      "eventId": "2",
+      "userId": "5998"
+    },
+    {
+      "id": "1733536661477",
+      "eventId": "2",
+      "userId": "499f"
+    },
+    {
+      "id": "1733536959618",
+      "eventId": "2",
+      "userId": "499f"
+    }
+  ]
+}
