@@ -1,6 +1,4 @@
-// frontend/src/components/EventForm.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { toast } from 'react-toastify'; // Import toast for notifications
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -16,39 +14,41 @@ const EventForm = () => {
 
     useEffect(() => {
         if (eventId) {
-            // Fetch the event data to edit
-            const fetchEvent = async () => {
-                try {
-                    const response = await axios.get(`http://localhost:5001/events/${eventId}`);
-                    const { title, date, description, videoStreamUrl } = response.data; // Include videoStreamUrl
-                    setTitle(title);
-                    setDate(date);
-                    setDescription(description);
-                    setVideoStreamUrl(videoStreamUrl); // Set the video stream URL
-                } catch (error) {
-                    console.error('Error fetching event:', error);
-                    toast.error('Failed to fetch event data.');
-                }
-            };
-            fetchEvent();
+            // Fetch the event data to edit from localStorage
+            const events = JSON.parse(localStorage.getItem('events')) || [];
+            const event = events.find(event => event._id === eventId);
+
+            if (event) {
+                setTitle(event.title);
+                setDate(event.date);
+                setDescription(event.description);
+                setVideoStreamUrl(event.videoStreamUrl);
+            } else {
+                toast.error('Event not found.');
+            }
         }
     }, [eventId]);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const eventData = { title, date, description, videoStreamUrl }; // Include videoStreamUrl
+        const eventData = { title, date, description, videoStreamUrl, _id: eventId || new Date().getTime().toString() }; // Add a unique ID if creating a new event
 
         setLoading(true); // Set loading state to true
 
         try {
-            let response;
+            const events = JSON.parse(localStorage.getItem('events')) || [];
+            
             if (eventId) {
                 // Update the event
-                response = await axios.put(`http://localhost:5001/events/${eventId}`, eventData);
+                const updatedEvents = events.map(event =>
+                    event._id === eventId ? eventData : event
+                );
+                localStorage.setItem('events', JSON.stringify(updatedEvents));
                 toast.success(`Event "${title}" updated successfully!`);
             } else {
                 // Create a new event
-                response = await axios.post('http://localhost:5001/events', eventData);
+                events.push(eventData);
+                localStorage.setItem('events', JSON.stringify(events));
                 toast.success(`Event "${title}" created successfully!`);
             }
 
@@ -74,17 +74,8 @@ const EventForm = () => {
 
     const handleError = (error) => {
         console.error('Error saving event:', error);
-        if (error.response) {
-            const errorMessage = error.response.data.message || 'Failed to save event';
-            setError(`Error: ${errorMessage}`);
-            toast.error(errorMessage);
-        } else if (error.request) {
-            setError('Error: No response from server');
-            toast.error('Error: No response from server');
-        } else {
-            setError(`Error: ${error.message}`);
-            toast.error(`Error: ${error.message}`);
-        }
+        setError('Error: Failed to save event');
+        toast.error('Error: Failed to save event');
     };
 
     return (
@@ -121,7 +112,7 @@ const EventForm = () => {
                     <label>Description:</label>
                     <textarea
                         value={description}
-                        onChange={(e) => setDescription (e.target.value)}
+                        onChange={(e) => setDescription(e.target.value)}
                         required
                     />
                 </div>
