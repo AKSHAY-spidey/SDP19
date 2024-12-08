@@ -1,99 +1,175 @@
-/* frontend/src/App.css */
-
 /* General Styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  line-height: 1.6;
 }
 
-h1 {
-  color: #333;
-}
-
-/* Navbar Styles */
-nav {
-  background-color: #007bff;
-  padding: 1rem;
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  justify-content: space-around;
-}
-
-nav ul li {
-  margin: 0 15px;
-}
-
-nav ul li a {
-  color: white;
+a {
+  color: #007bff;
   text-decoration: none;
-  font-weight: bold;
 }
 
-nav ul li a:hover {
+a:hover {
   text-decoration: underline;
 }
 
-/* Form Styles */
-form {
-  background: white;
-  padding: 2rem;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin: 2rem auto;
-  max-width: 400px;
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-form div {
-  margin-bottom: 1rem;
-}
-
-form label {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-form input {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-form button {
+/* Header */
+header {
   background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 0.7rem;
-  border-radius: 4px;
-  cursor: pointer;
-  width: 100%;
+  color: #fff;
+  padding: 15px 0;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-form button:hover {
-  background-color: #0056b3;
+header h1 {
+  margin: 0;
+  font-size: 2rem;
 }
 
-/* Event List Styles */
+/* Manage Events Page */
+h2 {
+  color: #444;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-ul li {
-  background: white;
-  margin: 1rem 0;
-  padding: 1rem;
-  border-radius: 5px;
+li {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 10px 0;
+  padding: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-ul li h2 {
-  margin: 0;
-  color: #007bff;
+li h3 {
+  margin: 0 0 10px;
+  font-size: 1.5rem;
+}
+
+li p {
+  margin: 5px 0;
+  color: #555;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Links */
+button a, a.link {
+  color: #fff;
+  text-decoration: none;
+}
+
+button a:hover {
+  text-decoration: underline;
+}
+
+/* Error Message */
+.error {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Status Styling */
+.status {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.status.active {
+  color: green;
+}
+
+.status.canceled {
+  color: red;
+}
+
+/* Form Styling */
+form {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 500px;
+  margin: 20px auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+}
+
+form input, form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+form button {
+  width: 100%;
+  padding: 10px;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  body {
+      padding: 10px;
+  }
+
+  li {
+      padding: 15px;
+  }
+
+  form {
+      padding: 15px;
+  }
+
+  button {
+      font-size: 0.9rem;
+      padding: 8px;
+  }
 }
