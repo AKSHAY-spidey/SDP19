@@ -17,12 +17,12 @@ const ManageEvents = () => {
             setError('No events found in local storage.');
         }
         setLoading(false);
-    }, []); // Runs only once when component mounts
+    }, []);
 
     const handleDelete = (eventId) => {
         const updatedEvents = events.filter(event => event.id !== eventId);
         setEvents(updatedEvents);
-        localStorage.setItem('events', JSON.stringify(updatedEvents)); // Update localStorage
+        localStorage.setItem('events', JSON.stringify(updatedEvents));
     };
 
     const handleModify = (eventId) => {
@@ -34,27 +34,26 @@ const ManageEvents = () => {
             event.id === eventId ? { ...event, status: 'canceled' } : event
         );
         setEvents(updatedEvents);
-        localStorage.setItem('events', JSON.stringify(updatedEvents)); // Update localStorage
+        localStorage.setItem('events', JSON.stringify(updatedEvents));
     };
 
     const handleRegister = (eventId) => {
-        if (!user || user.role !== 'user') {
-            alert('You must be logged in as a user to register for events.');
+        if (!user) {
+            alert('You must be logged in to register for events.');
             return;
         }
-
         const updatedEvents = events.map(event =>
             event.id === eventId ? {
                 ...event,
-                participants: event.participants ? [...event.participants, user.id] : [user.id]
+                participants: event.participants ? [...event.participants, user.id] : [user.id],
             } : event
         );
         setEvents(updatedEvents);
-        localStorage.setItem('events', JSON.stringify(updatedEvents)); // Update localStorage
+        localStorage.setItem('events', JSON.stringify(updatedEvents));
     };
 
-    if (!user || user.role === 'organizer') {
-        return <p>You do not have permission to manage events.</p>;
+    if (!user) {
+        return <p>You must be logged in to view this page.</p>;
     }
 
     return (
@@ -72,12 +71,20 @@ const ManageEvents = () => {
                             <p>{event.date} - {event.location}</p>
                             <p>{event.description}</p>
                             <p>Status: {event.status || 'active'}</p>
-                            {event.liveChatUrl && <p>Live Chat: <a href={event.liveChatUrl} target="_blank" rel="noopener noreferrer">Join Chat</a></p>}
-                            {event.videoStreamUrl && <p>Video Stream: <a href={event.videoStreamUrl} target="_blank" rel="noopener noreferrer">Watch Live</a></p>}
-                            {user && user.role === 'user' && (
+                            {event.liveChatUrl && (
+                                <p>
+                                    Live Chat: <a href={event.liveChatUrl} target="_blank" rel="noopener noreferrer">Join Chat</a>
+                                </p>
+                            )}
+                            {event.videoStreamUrl && (
+                                <p>
+                                    Video Stream: <a href={event.videoStreamUrl} target="_blank" rel="noopener noreferrer">Watch Live</a>
+                                </p>
+                            )}
+                            {user.role === 'user' && (
                                 <button onClick={() => handleRegister(event.id)} aria-label={`Register for event ${event.title}`}>Register</button>
                             )}
-                            {user && user.role === 'organizer' && (
+                            {user.role === 'organizer' && (
                                 <>
                                     <button onClick={() => handleModify(event.id)} aria-label={`Modify event ${event.title}`}>Modify</button>
                                     <button onClick={() => handleDelete(event.id)} aria-label={`Delete event ${event.title}`}>Delete</button>
@@ -88,7 +95,7 @@ const ManageEvents = () => {
                     ))
                 )}
             </ul>
-            <Link to="/events/new">Create New Event</Link>
+            {user.role === 'organizer' && <Link to="/events/new">Create New Event</Link>}
         </div>
     );
 };
